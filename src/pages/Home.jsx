@@ -16,7 +16,7 @@ export default function Home() {
         const data = await getAll();
         setRows(Array.isArray(data) ? data : []);
       } catch (e) {
-        setError(e?.message || "Falha ao carregar dados..");
+        setError(e?.message || "Falha ao carregar dados.");
       } finally {
         setLoading(false);
       }
@@ -38,40 +38,41 @@ export default function Home() {
   if (error) return <div style={{ padding: 20, color: "red" }}>{error}</div>;
 
   return (
-    <div style={{ display: "flex", padding: 20, gap: "20px" }}>
+    <div style={{ display: "flex", padding: 20, gap: 20 }}>
       {/* Coluna da lista */}
       <div style={{ flex: 1 }}>
         <h1>Lista de Ruas</h1>
 
         <input
           type="text"
-          placeholder="Buscar por nome ou bairro..."
+          placeholder="Buscar por nome/bairro/cidade…"
           value={busca}
           onChange={(e) => setBusca(e.target.value)}
-          style={{ padding: 8, marginBottom: 16, width: "100%", maxWidth: 400 }}
+          style={{ padding: 8, marginBottom: 16, width: "100%", maxWidth: 420 }}
         />
 
         <p>{resultados.length} resultado(s) encontrado(s)</p>
 
         <Virtuoso
-            style={{ height: "500px", border: "1px solid #ccc" }}
-            totalCount={resultados.length}
-            itemContent={(index) => {
-                const item = resultados[index]
-                const isActive = selecionado?.slug === item.slug   // 👈 compara selecionado com item da linha
+          style={{ height: 500, border: "1px solid #ccc" }}
+          totalCount={resultados.length}
+          itemContent={(index) => {
+            const item = resultados[index];
+            const isActive = selecionado?.slug === item.slug;
+            return (
+              <div
+                className={`item ${isActive ? "item--active" : ""}`}
+                onClick={() => setSelecionado(item)}
+                title={item.nome}
+              >
+                {item.nome} {item.bairro ? `— ${item.bairro}` : ""}
+              </div>
+            );
+          }}
+        />
+      </div>
 
-                return (
-                <div
-                    className={`item ${isActive ? "item--active" : ""}`}  // 👈 aplica classe condicional
-                    onClick={() => setSelecionado(item)}                  // 👈 atualiza o selecionado
-                >
-                    {item.nome} {item.bairro ? `— ${item.bairro}` : ""}
-                </div>
-                )
-            }}
-/>
-
-      {/* Coluna do detalhe */}
+      {/* Coluna do detalhe (mesma tela, sem mudar URL) */}
       <div style={{ flex: 1, borderLeft: "1px solid #ccc", paddingLeft: 20 }}>
         {selecionado ? (
           <Item data={selecionado} />

@@ -2,14 +2,19 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { getBySlug } from "../services/dataSource";
 
+/**
+ * Componente híbrido:
+ * - Modo embutido: <Item data={objSelecionado} />
+ * - Modo rota:     /item/:slug  → busca sozinho com useParams()
+ */
 export default function Item({ data }) {
   const params = useParams();
   const [item, setItem] = useState(data || null);
   const [loading, setLoading] = useState(!data && !!params?.slug);
   const [error, setError] = useState(null);
-  const [show, setShow] = useState(false);
+  const [show, setShow] = useState(false); // para o fade-in
 
-  // 🔹 Sincroniza com props
+  // Sincroniza quando recebe novo "data" via props (uso dentro da Home)
   useEffect(() => {
     if (data) {
       setItem(data);
@@ -18,7 +23,7 @@ export default function Item({ data }) {
     }
   }, [data]);
 
-  // 🔹 Busca por slug (modo rota)
+  // Busca quando usado via rota /item/:slug
   useEffect(() => {
     if (!data && params?.slug) {
       (async () => {
@@ -27,6 +32,7 @@ export default function Item({ data }) {
           const found = await getBySlug(params.slug);
           if (!found) throw new Error("Item não encontrado");
           setItem(found);
+          setError(null);
         } catch (e) {
           setError(e.message);
         } finally {
@@ -36,11 +42,11 @@ export default function Item({ data }) {
     }
   }, [data, params?.slug]);
 
-  // 🔹 Ativa a transição sempre que o item mudar
+  // Ativa o fade-in sempre que "item" muda
   useEffect(() => {
     if (item) {
       setShow(false);
-      const t = setTimeout(() => setShow(true), 50); // atraso pequeno p/ resetar animação
+      const t = setTimeout(() => setShow(true), 50);
       return () => clearTimeout(t);
     }
   }, [item]);
@@ -59,7 +65,8 @@ export default function Item({ data }) {
       )}
       {item.cidade && (
         <p>
-          <b>Cidade:</b> {item.cidade} - {item.uf}
+          <b>Cidade:</b> {item.cidade}
+          {item.uf ? ` - ${item.uf}` : ""}
         </p>
       )}
       {item.descricao && (
