@@ -54,21 +54,22 @@ export default function Home() {
         <p>{resultados.length} resultado(s) encontrado(s)</p>
 
         <Virtuoso
-          style={{ height: "500px", border: "1px solid #ccc" }}
-          totalCount={resultados.length}
-          itemContent={(index) => {
-            const item = resultados[index];
-            return (
-              <div
-                style={{ padding: "6px 10px", cursor: "pointer" }}
-                onClick={() => setSelecionado(item)}
-              >
-                {item.nome} {item.bairro ? `— ${item.bairro}` : ""}
-              </div>
-            );
-          }}
-        />
-      </div>
+            style={{ height: "500px", border: "1px solid #ccc" }}
+            totalCount={resultados.length}
+            itemContent={(index) => {
+                const item = resultados[index]
+                const isActive = selecionado?.slug === item.slug   // 👈 compara selecionado com item da linha
+
+                return (
+                <div
+                    className={`item ${isActive ? "item--active" : ""}`}  // 👈 aplica classe condicional
+                    onClick={() => setSelecionado(item)}                  // 👈 atualiza o selecionado
+                >
+                    {item.nome} {item.bairro ? `— ${item.bairro}` : ""}
+                </div>
+                )
+            }}
+/>
 
       {/* Coluna do detalhe */}
       <div style={{ flex: 1, borderLeft: "1px solid #ccc", paddingLeft: 20 }}>

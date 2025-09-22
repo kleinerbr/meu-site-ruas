@@ -40,3 +40,38 @@
 .read-the-docs {
   color: #888;
 }
+
+.item-fade {
+  opacity: 0;
+  transition: opacity 0.4s ease-in-out;
+}
+
+.item-fade.show {
+  opacity: 1;
+}
+
+.item {
+  padding: 6px 10px;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.item:hover {
+  background-color: #f5f5f5;
+}
+
+.item--active {
+  background-color: #e6f7ff;
+  font-weight: bold;
+  border-left: 4px solid #1890ff;
+  animation: pulse 0.4s;
+}
+
+@keyframes pulse {
+  0% {
+    background-color: #cceeff;
+  }
+  100% {
+    background-color: #e6f7ff;
+  }
+}
