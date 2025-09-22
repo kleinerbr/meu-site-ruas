@@ -4,11 +4,9 @@ import Item from "./pages/Item";
 
 export default function App() {
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/item/:slug" element={<Item />} />
-      </Routes>
-    </BrowserRouter>
+    <Routes>
+      <Route path="/" element={<Home />} />
+      <Route path="/item/:slug" element={<Item />} />
+    </Routes>
   );
 }
