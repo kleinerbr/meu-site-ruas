@@ -1,4 +1,3 @@
-import { mockData } from "../data/mock";
 import Papa from "papaparse";
 
 const MODE = import.meta.env.VITE_DATA_MODE ?? "MOCK";
