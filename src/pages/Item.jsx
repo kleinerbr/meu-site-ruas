@@ -1,33 +1,52 @@
 import { useEffect, useState } from "react";
-import { useParams, Link } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { getBySlug } from "../services/dataSource";
 
-export default function Item() {
-  const { slug } = useParams();
-  const [item, setItem] = useState(null);
+export default function Item({ data }) {
+  const params = useParams();
+  const [item, setItem] = useState(data || null);
+  const [loading, setLoading] = useState(!data && !!params?.slug);
+  const [error, setError] = useState(null);
 
+  // 🔹 Busca apenas se não recebeu via props
   useEffect(() => {
-    (async () => setItem(await getBySlug(slug)))();
-  }, [slug]);
+    if (!data && params?.slug) {
+      (async () => {
+        try {
+          const found = await getBySlug(params.slug);
+          if (!found) throw new Error("Item não encontrado");
+          setItem(found);
+        } catch (e) {
+          setError(e.message);
+        } finally {
+          setLoading(false);
+        }
+      })();
+    }
+  }, [data, params?.slug]);
 
-  if (!item) return <div style={{ padding: 20 }}>Carregando…</div>;
+  if (loading) return <div>Carregando...</div>;
+  if (error) return <div style={{ color: "red" }}>{error}</div>;
+  if (!item) return <div>Nenhum item selecionado</div>;
 
   return (
-    <div style={{ padding: 20 }}>
-      <Link to="/">← Voltar</Link>
-      <h1>{item.nome}</h1>
+    <div>
+      <h2>{item.nome}</h2>
       {item.bairro && (
         <p>
-          <strong>Bairro:</strong> {item.bairro}
+          <b>Bairro:</b> {item.bairro}
         </p>
       )}
       {item.cidade && (
         <p>
-          <strong>Cidade/UF:</strong> {item.cidade}
-          {item.uf ? `/${item.uf}` : ""}
+          <b>Cidade:</b> {item.cidade} - {item.uf}
         </p>
       )}
-      {item.descricao && <p>{item.descricao}</p>}
+      {item.descricao && (
+        <p>
+          <b>Descrição:</b> {item.descricao}
+        </p>
+      )}
     </div>
   );
 }

@@ -1,13 +1,14 @@
 import { useEffect, useMemo, useState } from "react";
-import { Link } from "react-router-dom";
 import { getAll } from "../services/dataSource";
 import { Virtuoso } from "react-virtuoso";
+import Item from "./Item";
 
 export default function Home() {
   const [busca, setBusca] = useState("");
   const [rows, setRows] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [selecionado, setSelecionado] = useState(null);
 
   useEffect(() => {
     (async () => {
@@ -37,33 +38,46 @@ export default function Home() {
   if (error) return <div style={{ padding: 20, color: "red" }}>{error}</div>;
 
   return (
-    <div style={{ padding: 20 }}>
-      <h1>Lista de Ruas</h1>
+    <div style={{ display: "flex", padding: 20, gap: "20px" }}>
+      {/* Coluna da lista */}
+      <div style={{ flex: 1 }}>
+        <h1>Lista de Ruas</h1>
 
-      <input
-        type="text"
-        placeholder="Buscar por nome ou bairro..."
-        value={busca}
-        onChange={(e) => setBusca(e.target.value)}
-        style={{ padding: 8, marginBottom: 16, width: "100%", maxWidth: 400 }}
-      />
+        <input
+          type="text"
+          placeholder="Buscar por nome ou bairro..."
+          value={busca}
+          onChange={(e) => setBusca(e.target.value)}
+          style={{ padding: 8, marginBottom: 16, width: "100%", maxWidth: 400 }}
+        />
 
-      <p>{resultados.length} resultado(s) encontrado(s)</p>
+        <p>{resultados.length} resultado(s) encontrado(s)</p>
 
-      <Virtuoso
-        style={{ height: "500px", border: "1px solid #ccc" }}
-        totalCount={resultados.length}
-        itemContent={(index) => {
-          const item = resultados[index];
-          return (
-            <div style={{ padding: "6px 10px" }}>
-              <Link to={`/item/${item.slug}`}>
+        <Virtuoso
+          style={{ height: "500px", border: "1px solid #ccc" }}
+          totalCount={resultados.length}
+          itemContent={(index) => {
+            const item = resultados[index];
+            return (
+              <div
+                style={{ padding: "6px 10px", cursor: "pointer" }}
+                onClick={() => setSelecionado(item)}
+              >
                 {item.nome} {item.bairro ? `— ${item.bairro}` : ""}
-              </Link>
-            </div>
-          );
-        }}
-      />
+              </div>
+            );
+          }}
+        />
+      </div>
+
+      {/* Coluna do detalhe */}
+      <div style={{ flex: 1, borderLeft: "1px solid #ccc", paddingLeft: 20 }}>
+        {selecionado ? (
+          <Item data={selecionado} />
+        ) : (
+          <p>Selecione uma rua na lista →</p>
+        )}
+      </div>
     </div>
   );
 }
