@@ -16,7 +16,7 @@ export default function Home() {
         const data = await getAll();
         setRows(Array.isArray(data) ? data : []);
       } catch (e) {
-        setError(e?.message || "Falha ao carregar dados.");
+        setError(e?.message || "Falha ao carregar dados..");
       } finally {
         setLoading(false);
       }
