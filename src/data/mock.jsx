@@ -1,0 +1,48 @@
+// dados fake por enquanto (pode editar/expandir à vontade)
+export const mockData = [
+  {
+    id: 1,
+    nome: "Rua das Palmeiras",
+    bairro: "Centro",
+    cidade: "Maceió",
+    uf: "AL",
+    descricao: "Rua movimentada com muitas lojas.",
+    slug: "rua-das-palmeiras",
+  },
+  {
+    id: 2,
+    nome: "Avenida Beira-Mar",
+    bairro: "Pajuçara",
+    cidade: "Maceió",
+    uf: "AL",
+    descricao: "Vista para o mar, muito turística.",
+    slug: "avenida-beira-mar",
+  },
+  {
+    id: 3,
+    nome: "Rua do Sol",
+    bairro: "Trapiche",
+    cidade: "Maceió",
+    uf: "AL",
+    descricao: "Rua tranquila em bairro residencial.",
+    slug: "rua-do-sol",
+  },
+  {
+    id: 4,
+    nome: "Rua das Flores",
+    bairro: "Centro",
+    cidade: "Maceió",
+    uf: "AL",
+    descricao: "Feira de flores aos domingos.",
+    slug: "rua-das-flores",
+  },
+  {
+    id: 5,
+    nome: "Avenida Fernandes Lima",
+    bairro: "Farol",
+    cidade: "Maceió",
+    uf: "AL",
+    descricao: "Uma das principais avenidas da cidade.",
+    slug: "avenida-fernandes-lima",
+  },
+];
