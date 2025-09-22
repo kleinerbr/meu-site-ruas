@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from "react";
 import { getAll } from "../services/dataSource";
 import { Virtuoso } from "react-virtuoso";
 import Item from "./Item";
+import { highlightText } from "../utils/highlightText.jsx"; // 👈 import da função utilitária
 
 export default function Home() {
   const [busca, setBusca] = useState("");
@@ -39,8 +40,8 @@ export default function Home() {
 
   return (
     <div style={{ display: "flex", padding: 20, gap: 20 }}>
-      {/* Coluna da lista */}
-      <div style={{ flex: 1 }}>
+      {/* Coluna da lista (fixa) */}
+      <div style={{ width: "500px", minWidth: "280px" }}>
         <h1>Lista de Ruas</h1>
 
         <input
@@ -48,7 +49,7 @@ export default function Home() {
           placeholder="Buscar por nome/bairro/cidade…"
           value={busca}
           onChange={(e) => setBusca(e.target.value)}
-          style={{ padding: 8, marginBottom: 16, width: "100%", maxWidth: 420 }}
+          style={{ padding: 8, marginBottom: 16, width: "100%" }}
         />
 
         <p>{resultados.length} resultado(s) encontrado(s)</p>
@@ -65,15 +66,36 @@ export default function Home() {
                 onClick={() => setSelecionado(item)}
                 title={item.nome}
               >
-                {item.nome} {item.bairro ? `— ${item.bairro}` : ""}
+                {/* Aqui aplicamos o destaque */}
+                {highlightText(item.nome, busca)}
+                {item.bairro ? (
+                  <>
+                    {" — "}
+                    {highlightText(item.bairro, busca)}
+                  </>
+                ) : null}
+                {item.cidade ? (
+                  <>
+                    {" — "}
+                    {highlightText(item.cidade, busca)}
+                  </>
+                ) : null}
               </div>
             );
           }}
         />
       </div>
 
-      {/* Coluna do detalhe (mesma tela, sem mudar URL) */}
-      <div style={{ flex: 1, borderLeft: "1px solid #ccc", paddingLeft: 20 }}>
+      {/* Coluna do detalhe (estável) */}
+      <div
+        style={{
+          flex: 1,
+          borderLeft: "1px solid #ccc",
+          paddingLeft: 20,
+          minHeight: "500px",
+          overflowY: "auto",
+        }}
+      >
         {selecionado ? (
           <Item data={selecionado} />
         ) : (

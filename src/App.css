@@ -6,22 +6,22 @@
 }
 
 .item:hover {
-  background-color: #f5f5f5;
+  background-color: #838383;
 }
 
 .item--active {
-  background-color: #e6f7ff;
+  background-color: #494949; /* cinza suave */
   font-weight: bold;
-  border-left: 4px solid #1890ff;
-  animation: pulse 0.4s;
+  border-left: 4px solid #888; /* cinza mais escuro */
+  animation: pulse-gray 0.1s;
 }
 
-@keyframes pulse {
+@keyframes pulse-gray {
   0% {
-    background-color: #cceeff;
+    background-color: #acacac;
   }
   100% {
-    background-color: #e6f7ff;
+    background-color: #b3b3b3;
   }
 }
 
@@ -32,4 +32,11 @@
 }
 .item-fade.show {
   opacity: 1;
+}
+
+/* Destaque de busca */
+.highlight {
+  background-color: #fff3b0; /* amarelo suave */
+  padding: 0 2px;
+  border-radius: 3px;
 }
