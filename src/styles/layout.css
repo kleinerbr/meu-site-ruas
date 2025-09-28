@@ -1,0 +1,241 @@
+/* ===== Layout principal ===== */
+.layout {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  position: relative; /* para posicionar conteúdo absoluto */
+}
+
+/* ===== Header (dark mode fixo) ===== */
+.layout header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 20px;
+  background-color: #1a1a1a;
+  color: #ccc;
+  border-bottom: 1px solid #333;
+  z-index: 1000;
+}
+
+.layout header h1 {
+  margin: 0;
+  font-size: 1.5rem;
+  color: #f5f5f5;
+}
+
+.layout header button {
+  background-color: #333;
+  color: #f5f5f5;
+  border: none;
+  padding: 8px 16px;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.layout header button:hover {
+  background-color: #444;
+}
+
+.layout header input {
+  flex: 1;
+  padding: 8px;
+  border-radius: 4px;
+  border: 1px solid #555;
+  background-color: #222;
+  color: #f5f5f5;
+}
+
+/* ===== Conteúdo ===== */
+.layout-content {
+  display: flex;
+  flex: 1;
+  min-height: 0;
+}
+
+/* ===== Sidebar ===== */
+.sidebar {
+  flex: 0 0 280px; /* largura fixa */
+  max-width: 320px;
+  border-right: 1px solid #ccc;
+  padding: 10px;
+  overflow-y: auto;
+}
+
+.sidebar h2 {
+  margin-top: 0;
+}
+
+.sidebar .item {
+  margin-bottom: 6px;
+  cursor: pointer;
+  padding: 6px 10px;
+  border-radius: 4px;
+}
+
+.sidebar .item--active {
+  background-color: #494949;
+  color: white;
+}
+
+/* ===== Ajuste do conteúdo para não ficar escondido ===== */
+.layout-right {
+  position: absolute;
+  top: 70px; /* abaixo do header */
+  bottom: 60px; /* acima do footer */
+  left: 0;
+  right: 0;
+  overflow-y: auto;
+  padding: 20px;
+  min-width: 0;
+}
+
+/* ===== Grid ===== */
+.grid {
+  width: 100%; /* ocupa toda a largura */
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 16px;
+  padding: 10px;
+}
+
+/* ===== ItemResumo (card) ===== */
+.item-resumo {
+  border: 1px solid #666;
+  border-radius: 6px;
+  padding: 12px;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+  background-color: transparent;
+  color: #f5f5f5; /* 🔒 força texto claro */
+}
+
+.item-resumo:hover {
+  transform: scale(1.02);
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+}
+
+.item-resumo h3 {
+  margin: 0 0 8px;
+  font-size: 1.2em;
+  font-weight: bold;
+  color: #fff; /* 🔒 título sempre branco */
+}
+
+.item-resumo p {
+  margin: 0;
+  font-size: 0.9em;
+  color: #ddd; /* 🔒 textos secundários sempre claros */
+}
+
+/* ===== Detalhe ===== */
+.item-detalhado {
+  padding: 20px;
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+/* ===== Footer (fixo no rodapé) ===== */
+.layout footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 50px;
+  padding: 10px 20px;
+  text-align: center;
+  background-color: #1a1a1a;
+  border-top: 1px solid #333;
+  font-size: 0.9em;
+  color: #ccc;
+  z-index: 1000;
+}
+
+/* ===== Animação ===== */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Ações do header (botão + busca) */
+.header-actions {
+  display: flex;
+  gap: 10px;
+  flex: 1;
+  margin-left: 20px;
+}
+
+/* Alternador de visualização */
+.view-toggle {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+.view-toggle button {
+  padding: 6px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  background: #494949;
+}
+
+.view-toggle button.active {
+  border: 1px solid #ccc;
+  background: #757575;
+  color: white;
+  border-color: white;
+}
+
+/* ===== Tabela de resultados (dark mode fixo) ===== */
+.result-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+  background: transparent;
+  color: #f5f5f5; /* 🔒 força texto claro */
+}
+
+.result-table th,
+.result-table td {
+  border: 1px solid #666;
+  padding: 8px 10px;
+  text-align: left;
+  color: #f5f5f5; /* 🔒 texto claro sempre */
+}
+
+.result-table th {
+  background-color: #333;
+  color: #fff; /* 🔒 cabeçalho sempre branco */
+  font-weight: bold;
+}
+
+.result-table tr:nth-child(even) {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.result-table tr:hover {
+  background: rgba(255, 255, 255, 0.15);
+  cursor: pointer;
+}
+
+.btn-voltar {
+  margin-bottom: 15px;
+  padding: 6px 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: #333;
+  color: #f5f5f5;
+  cursor: pointer;
+}
+
+.btn-voltar:hover {
+  background-color: #444;
+}

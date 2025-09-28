@@ -3,7 +3,8 @@
   line-height: 1.5;
   font-weight: 400;
 
-  color-scheme: light dark;
+  /* dark fixo */
+  color-scheme: dark;
   color: rgba(255, 255, 255, 0.87);
   background-color: #242424;
 
@@ -22,12 +23,19 @@ a:hover {
   color: #535bf2;
 }
 
+html,
+body,
+#root {
+  height: 100%;
+  width: 100%;
+}
+
 body {
   margin: 0;
-  display: flex;
-  place-items: center;
   min-width: 320px;
   min-height: 100vh;
+  background-color: #242424; /* garante fundo dark */
+  color: rgba(255, 255, 255, 0.87);
 }
 
 h1 {
@@ -43,6 +51,7 @@ button {
   font-weight: 500;
   font-family: inherit;
   background-color: #1a1a1a;
+  color: #f5f5f5;
   cursor: pointer;
   transition: border-color 0.25s;
 }

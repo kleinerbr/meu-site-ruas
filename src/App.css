@@ -6,7 +6,7 @@
 }
 
 .item:hover {
-  background-color: #838383;
+  background-color: #ababab;
 }
 
 .item--active {
@@ -36,7 +36,7 @@
 
 /* Destaque de busca */
 .highlight {
-  background-color: #fff3b0; /* amarelo suave */
+  background-color: #fbf5d1; /* amarelo suave */
   padding: 0 2px;
   border-radius: 3px;
 }

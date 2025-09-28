@@ -1,13 +1,16 @@
+// src/App.jsx
 import { Routes, Route } from "react-router-dom";
-import Home from "./pages/Home";
-import Item from "./pages/Item";
+import MainLayout from "./pages/MainLayout";
+import Item from "./pages/Item"; // opcional: rota direta pelo slug
 import "./App.css";
 
 export default function App() {
   return (
     <Routes>
-      <Route path="/" element={<Home />} />
-      {/* rota direta para compartilhar apenas os detalhes */}
+      {/* Página inicial agora usa MainLayout */}
+      <Route path="/" element={<MainLayout />} />
+
+      {/* rota direta para compartilhar detalhes de um item */}
       <Route path="/item/:slug" element={<Item />} />
     </Routes>
   );
