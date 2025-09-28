@@ -1,32 +1,52 @@
-// src/components/ItemDetalhado.jsx
-export default function ItemDetalhado({ item, onClose, fromSlug = false }) {
-  if (!item) return <p>Nenhum item selecionado</p>;
+import { useNavigate } from "react-router-dom";
+import { getResumoNome } from "../services/dataSource";
+import "../styles/item-detalhado.css";
 
-  const ignorar = ["id", "slug"]; // não exibir id nem slug
+export default function ItemDetalhado({ item, onClose }) {
+  const navigate = useNavigate();
+
+  if (!item) return null;
+
+  const ignorar = new Set([
+    "id",
+    "slug",
+    "tipo",
+    "titulo",
+    "nome",
+    "bairro",
+    "Link",
+  ]);
+
+  const handleBack = () => {
+    if (onClose) {
+      onClose(); // fecha painel lateral (MainLayout)
+    } else {
+      navigate("/"); // volta pra Home (rota direta)
+    }
+  };
+
+  const backLabel = onClose ? "← Voltar à busca" : "← Ir para página inicial";
 
   return (
     <div className="item-detalhado">
-      {fromSlug ? (
-        <button
-          onClick={() => (window.location.href = "/")}
-          className="btn-voltar"
-        >
-          🏠 Ir para página inicial
-        </button>
-      ) : (
-        <button onClick={onClose} className="btn-voltar">
-          ← Voltar à busca
-        </button>
-      )}
+      <button onClick={handleBack} style={{ marginBottom: "1rem" }}>
+        {backLabel}
+      </button>
 
-      {Object.entries(item).map(([coluna, valor]) => {
-        if (!valor || ignorar.includes(coluna)) return null;
-        return (
-          <p key={coluna}>
-            <b>{coluna}:</b> {valor}
-          </p>
-        );
-      })}
+      {/* título principal */}
+      <h2>{getResumoNome(item) || "(sem nome)"}</h2>
+
+      {/* lista dinâmica */}
+      <div className="detalhes">
+        {Object.entries(item).map(([coluna, valor]) => {
+          if (!valor || ignorar.has(coluna)) return null;
+          return (
+            <p key={coluna}>
+              <b>{coluna}:</b> {valor}
+            </p>
+          );
+        })}
+      </div>
     </div>
   );
 }

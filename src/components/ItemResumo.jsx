@@ -1,46 +1,31 @@
 // src/components/ItemResumo.jsx
 import { getResumoNome } from "../services/dataSource";
 
-// Retorna o primeiro campo não vazio entre várias opções
-function pick(obj, keys) {
-  for (const k of keys) {
-    const v = obj?.[k];
-    if (v != null && String(v).trim() !== "") {
-      return { key: k, value: v };
-    }
-  }
-  return null;
-}
-
 export default function ItemResumo({ item, onClick }) {
-  const bairro = pick(item, ["Bairro principal", "Bairro", "Demais bairros"]);
-  const cidade = pick(item, ["Cidade", "Município", "Municipio"]);
-  const uf = pick(item, ["UF", "Estado"]);
-
   return (
     <div className="item-resumo" onClick={onClick}>
-      {/* 👉 agora o título vem montado pela função centralizada */}
+      {/* título resumido → Tipo + Título + Nome */}
       <h3>{getResumoNome(item) || "(sem nome)"}</h3>
 
-      {bairro && (
+      {item.bairro && (
         <p>
-          <b>{bairro.key}:</b> {bairro.value}
+          <b>Bairro:</b> {item.bairro}
         </p>
       )}
 
-      {(cidade || uf) && (
+      {(item.cidade || item.uf) && (
         <p>
-          {cidade ? (
+          {item.cidade ? (
             <>
-              <b>{cidade.key}:</b> {cidade.value}
+              <b>Cidade:</b> {item.cidade}
             </>
           ) : null}
-          {uf ? (
-            cidade ? (
-              ` - ${uf.value}`
+          {item.uf ? (
+            item.cidade ? (
+              ` - ${item.uf}`
             ) : (
               <>
-                <b>{uf.key}:</b> {uf.value}
+                <b>UF:</b> {item.uf}
               </>
             )
           ) : null}
