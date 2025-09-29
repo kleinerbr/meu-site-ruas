@@ -35,7 +35,18 @@ export default function ItemDetalhado({ item, onClose }) {
 
       {/* título principal */}
       <h2>{getResumoNome(item) || "(sem nome)"}</h2>
-
+      {/* Exibe o link completo */}
+      <p style={{ fontSize: "0.85rem", color: "#aaa" }}>
+        <i>Link direto:</i>{" "}
+        <a
+          href={`/item/${item.slug}`}
+          target="_blank"
+          rel="noopener noreferrer"
+          style={{ color: "#66aaff" }}
+        >
+          {window.location.origin}/item/{item.slug}
+        </a>
+      </p>
       {/* lista dinâmica */}
       <div className="detalhes">
         {Object.entries(item).map(([coluna, valor]) => {
